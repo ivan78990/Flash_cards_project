@@ -3,16 +3,16 @@ import pandas as pd
 import random
 
 BACKGROUND_COLOR = "#B1DDC6"
-timer = None
 df = pd.read_csv("./data/french_words.csv")
 to_learn = df.to_dict(orient="records")
-random_dict = None
-timer = None
+random_dict = {}
 
 
 def random_pair():
     global random_dict
     global timer
+
+    window.after_cancel(timer)
     random_dict = random.choice(to_learn)
     random_word = random_dict["French"]
     canvas.itemconfig(canvas_word, text=random_word, fill="black")
@@ -23,16 +23,15 @@ def random_pair():
 
 def change_side():
     global random_dict
-    global timer
     canvas.itemconfig(canvas_img, image=card_back)
     canvas.itemconfig(canvas_title, text="English", fill="white")
     canvas.itemconfig(canvas_word, text=random_dict["English"], fill="white")
-    window.after_cancel(timer)
 
 
 window = Tk()
 window.title("Flash Cards")
 window.config(bg=BACKGROUND_COLOR, padx=50, pady=50)
+timer = window.after(3000, change_side)
 
 card_front = PhotoImage(file="./images/card_front.png")
 card_back = PhotoImage(file="./images/card_back.png")
