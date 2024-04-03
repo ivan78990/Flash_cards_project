@@ -22,7 +22,6 @@ def random_pair():
 
 
 def change_side():
-    global random_dict
     canvas.itemconfig(canvas_img, image=card_back)
     canvas.itemconfig(canvas_title, text="English", fill="white")
     canvas.itemconfig(canvas_word, text=random_dict["English"], fill="white")
